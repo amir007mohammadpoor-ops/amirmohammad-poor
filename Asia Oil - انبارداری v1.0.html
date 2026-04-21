@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asia Oil - انبارداری</title>
+<style>
+:root {
+  --primary: #c0392b;
+  --primary-light: #fdf0ef;
+  --primary-mid: #e74c3c;
+  --accent: #2c2c2c;
+  --success: #1a9e5c;
+  --success-bg: #e8f8f2;
+  --danger: #c0392b;
+  --danger-bg: #fdf0ef;
+  --warn: #d68910;
+  --warn-bg: #fef9e7;
+  --info: #3d3d3d;
+  --info-bg: #f2f2f2;
+  --bg: #f5f5f5;
+  --card: #ffffff;
+  --border: #e0e0e0;
+  --text: #1c1c1c;
+  --muted: #6b6b6b;
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Tahoma, Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 60%, #3a1010 100%);
+  color: #fff; padding: 14px 20px;
+  display: flex; align-items: center; gap: 16px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.35);
+  border-bottom: 3px solid #c0392b;
+}
+.hdr-icon { font-size: 24px; }
+.header h1 { font-size: 17px; font-weight: bold; letter-spacing: 0.3px; }
+.header .workshop-name { font-size: 12px; color: #e8a89f; margin-top: 2px; }
+.header-actions { margin-right: auto; display: flex; gap: 8px; align-items: center; }
+.header-actions button { font-size: 12px; padding: 6px 13px; border-radius: 7px; cursor: pointer; border: none; font-family: Tahoma, Arial, sans-serif; font-weight: bold; transition: opacity 0.15s; }
+.header-actions button:hover { opacity: 0.85; }
+.btn-backup  { background: #27ae60; color: #fff; }
+.btn-restore { background: #c0392b; color: #fff; }
+.btn-settings{ background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.25) !important; }
+.btn-lang { background: transparent; color: rgba(255,255,255,0.65); border: 1px solid rgba(255,255,255,0.25) !important; border-radius: 5px; padding: 3px 9px; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+.btn-lang.active { background: #c0392b; color: #fff; border-color: #c0392b !important; }
+
+/* QUICK BARS */
+.quick-section { padding: 14px 20px 0; display: flex; gap: 12px; flex-wrap: wrap; }
+.quick-bar { flex: 1; min-width: 300px; padding: 12px 16px; border-radius: var(--radius); box-shadow: var(--shadow); }
+.quick-bar.return-bar { background: #f2f2f2; border: 2px solid #aaaaaa; }
+.quick-bar.scrap-bar  { background: #fff5f5; border: 2px solid #e8a09a; }
+.quick-bar .bar-title { font-size: 12px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+.return-bar .bar-title { color: #2c2c2c; }
+.scrap-bar  .bar-title { color: #922b21; }
+.quick-bar .fields { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; }
+.quick-bar .fg { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 100px; }
+.quick-bar label { font-size: 11px; color: var(--muted); }
+.quick-bar input, .quick-bar select { padding: 6px 9px; border: 2px solid #c0bfbf; border-radius: 6px; font-family: Tahoma, Arial, sans-serif; font-size: 13px; background: #fff; transition: border 0.2s; }
+.quick-bar input:focus, .quick-bar select:focus { outline: none; border-color: #c0392b; box-shadow: 0 0 0 3px rgba(192,57,43,0.12); }
+
+/* STATS */
+.stats { display: flex; gap: 10px; padding: 14px 20px; flex-wrap: wrap; }
+.stat { background: var(--card); border-radius: var(--radius); padding: 12px 16px; flex: 1; min-width: 100px; box-shadow: var(--shadow); border: 1.5px solid #d8d8d8; border-top: 4px solid var(--border); transition: transform 0.15s; }
+.stat:hover { transform: translateY(-2px); }
+.stat:nth-child(1) { border-top-color: #2c2c2c; }
+.stat:nth-child(2) { border-top-color: #c0392b; }
+.stat:nth-child(3) { border-top-color: #1a9e5c; }
+.stat:nth-child(4) { border-top-color: #7f0000; }
+.stat:nth-child(5) { border-top-color: #d68910; }
+.stat-label { font-size: 11px; color: var(--muted); margin-bottom: 5px; }
+.stat-value { font-size: 24px; font-weight: bold; color: var(--text); }
+.stat-value.green { color: #1a9e5c; }
+.stat-value.red   { color: #c0392b; }
+.stat-value.amber { color: #d68910; }
+
+/* TABS */
+.tabs { display: flex; gap: 0; padding: 0 20px; border-bottom: 2px solid var(--border); background: var(--card); margin-top: 6px; overflow-x: auto; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+.tab { padding: 11px 18px; cursor: pointer; font-size: 13px; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; background: none; border-top: none; border-left: none; border-right: none; font-family: Tahoma, Arial, sans-serif; transition: color 0.15s; }
+.tab:hover { color: #c0392b; }
+.tab.active { color: #c0392b; font-weight: bold; border-bottom-color: #c0392b; }
+
+/* PANELS */
+.panel { display: none; padding: 16px 20px; }
+.panel.active { display: block; }
+
+/* FORMS */
+.form-row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 14px; background: var(--card); padding: 14px 16px; border-radius: var(--radius); box-shadow: var(--shadow); border: 1.5px solid #d0d0d0; border-right: 4px solid #c0392b; }
+.fg { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 120px; }
+label { font-size: 12px; color: var(--muted); }
+input, select { padding: 7px 10px; border: 2px solid #c0bfbf; border-radius: 7px; font-family: Tahoma, Arial, sans-serif; font-size: 13px; background: #fff; transition: border 0.2s; }
+input:focus, select:focus { outline: none; border-color: #c0392b; box-shadow: 0 0 0 3px rgba(192,57,43,0.1); }
+
+/* BUTTONS */
+.btn { padding: 8px 18px; border-radius: 7px; cursor: pointer; font-weight: bold; border: none; font-family: Tahoma, Arial, sans-serif; font-size: 13px; transition: opacity 0.15s, transform 0.1s; }
+.btn:hover { opacity: 0.88; }
+.btn:active { transform: scale(0.97); }
+.btn-in   { background: linear-gradient(135deg,#1a8a4e,#1a9e5c); color: #fff; }
+.btn-out  { background: linear-gradient(135deg,#922b21,#c0392b); color: #fff; }
+.btn-ret  { background: linear-gradient(135deg,#2c2c2c,#484848); color: #fff; }
+.btn-sc   { background: linear-gradient(135deg,#b7770d,#d68910); color: #fff; }
+.btn-print{ background: linear-gradient(135deg,#1a1a1a,#3a3a3a); color: #fff; font-size: 12px; padding: 6px 14px; }
+
+/* FILTER BAR */
+.filter-bar { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; }
+.filter-bar input { flex: 1; }
+
+/* TABLE */
+.tbl-wrap { background: var(--card); border-radius: var(--radius); border: 2px solid #c8c8c8; overflow: hidden; box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: right; padding: 10px 12px; font-size: 12px; color: #fff; background: #2c2c2c; border-bottom: 2px solid #c0392b; font-weight: bold; }
+td { padding: 9px 12px; border-bottom: 1.5px solid #e0e0e0; color: var(--text); text-align: right; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fff5f5; }
+.empty { text-align: center; padding: 2.5rem; color: #aaa; font-size: 13px; }
+
+/* BADGES */
+.badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: bold; }
+.b-in   { background: #d5f5e3; color: #1a6b3a; }
+.b-out  { background: #fadbd8; color: #922b21; }
+.b-ret  { background: #e8e8e8; color: #2c2c2c; }
+.b-sc   { background: #fef9e7; color: #9a6e07; }
+.b-ok   { background: #d5f5e3; color: #1a6b3a; }
+.b-low  { background: #fef9e7; color: #9a6e07; }
+.b-zero { background: #fadbd8; color: #922b21; }
+
+/* MODAL */
+.modal-bg { display: none; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.6); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+.modal-bg.open { display: flex; }
+.modal { background: var(--card); border-radius: 14px; padding: 26px; width: 380px; max-width: 95vw; box-shadow: 0 12px 40px rgba(0,0,0,0.25); border: 2px solid #d0d0d0; border-top: 4px solid #c0392b; }
+.modal h2 { font-size: 15px; margin-bottom: 18px; color: #c0392b; display: flex; align-items: center; gap: 6px; }
+.modal .fg { margin-bottom: 12px; }
+.modal-btns { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+.btn-save   { background: #c0392b; color: #fff; }
+.btn-cancel { background: #eee; color: #555; }
+
+/* SAVE INDICATOR */
+.pin-dot { width:14px;height:14px;border-radius:50%;background:#444;border:2px solid #888;transition:background 0.15s; }
+.pin-dot.filled { background:#c0392b;border-color:#c0392b; }
+.pin-btn { width:72px;height:56px;border-radius:10px;background:#2c2c2c;color:#fff;font-size:20px;font-weight:bold;border:2px solid #444;cursor:pointer;font-family:Tahoma,Arial,sans-serif;transition:background 0.1s; }
+.pin-btn:hover { background:#3a3a3a; }
+.pin-btn:active { background:#c0392b; }
+.lang-opt { display:block;width:100%;padding:9px 14px;background:transparent;color:#fff;border:none;text-align:right;font-family:Tahoma,Arial,sans-serif;font-size:13px;cursor:pointer;transition:background 0.15s; }
+.lang-opt:hover { background:#c0392b; }
+.lang-opt.active { background:#7a1a1a; font-weight:bold; }
+.save-dot { width: 9px; height: 9px; border-radius: 50%; background: #27ae60; display: inline-block; margin-left: 6px; transition: background 0.3s; box-shadow: 0 0 0 2px rgba(39,174,96,0.3); }
+.save-dot.saving { background: #d68910; box-shadow: 0 0 0 2px rgba(214,137,16,0.3); }
+
+/* TOAST */
+.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1c1c1c; color: #fff; padding: 11px 24px; border-radius: 10px; font-size: 13px; z-index: 999; opacity: 0; transition: all 0.3s cubic-bezier(.4,0,.2,1); pointer-events: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.25); border-right: 3px solid #c0392b; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { background: #1a9e5c; border-right-color: #fff; }
+.toast.warning { background: #c0392b; border-right-color: #fff; }
+
+
+.brightness-dim  { filter: brightness(0.6); }
+.brightness-low  { filter: brightness(0.8); }
+.brightness-mid  { filter: brightness(1.0); }
+.brightness-high { filter: brightness(1.15); }
+.brightness-max  { filter: brightness(1.3); }
+
+@media print {
+  .header-actions, .quick-section, .tabs, .filter-bar, .btn-print, .btn-backup, .btn-restore, .btn-settings { display: none !important; }
+  .panel { display: block !important; }
+  body { background: #fff; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="lock-screen" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,#1a1a1a,#2c2c2c,#3a1010);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:20px;">
+  <img src="data:image/png;base64,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" style="height:90px;width:90px;object-fit:contain;border-radius:10px;background:#fff;padding:4px;">
+  <div style="color:#fff;font-size:20px;font-weight:bold;letter-spacing:1px;">Asia Oil Metallurgsts</div>
+  <div style="color:#e8a89f;font-size:13px;">سیستم مدیریت انبار</div>
+  <div style="color:#aaa;font-size:12px;margin-bottom:8px;">PIN خود را وارد کنید</div>
+  <div id="pin-dots" style="display:flex;gap:12px;margin-bottom:16px;">
+    <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,72px);gap:10px;">
+    <button class="pin-btn" onclick="pinPress('1')">۱</button>
+    <button class="pin-btn" onclick="pinPress('2')">۲</button>
+    <button class="pin-btn" onclick="pinPress('3')">۳</button>
+    <button class="pin-btn" onclick="pinPress('4')">۴</button>
+    <button class="pin-btn" onclick="pinPress('5')">۵</button>
+    <button class="pin-btn" onclick="pinPress('6')">۶</button>
+    <button class="pin-btn" onclick="pinPress('7')">۷</button>
+    <button class="pin-btn" onclick="pinPress('8')">۸</button>
+    <button class="pin-btn" onclick="pinPress('9')">۹</button>
+    <button class="pin-btn" onclick="pinPress('del')" style="background:#5a1a1a;">⌫</button>
+    <button class="pin-btn" onclick="pinPress('0')">۰</button>
+    <button class="pin-btn" onclick="pinPress('ok')" style="background:#c0392b;">OK</button>
+  </div>
+  <div id="pin-error" style="color:#ff6b6b;font-size:13px;margin-top:12px;min-height:20px;"></div>
+  <div style="color:#555;font-size:11px;margin-top:20px;">اگر PIN تنظیم نشده، مستقیم وارد می‌شوید</div>
+  <div style="color:#444;font-size:11px;margin-top:6px;">در صورت فراموشی رمز، از کیبورد عدد وارد کنید</div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <img src="data:image/png;base64,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" style="height:70px;width:70px;object-fit:contain;border-radius:8px;background:#fff;padding:3px;" alt="Asia Oil Logo">
+  <div>
+    <div id="hdr-title" style="font-size:17px;font-weight:bold;">سیستم مدیریت انبار</div>
+    <div class="workshop-name" id="hdr-workshop">Asia Oil Metallurgsts</div>
+  </div>
+
+  <!-- انتخاب جبهه کاری -->
+  <div style="display:flex;flex-direction:column;gap:4px;margin-right:8px;">
+    <div style="font-size:11px;color:#e8a89f;font-weight:bold;">جبهه کاری</div>
+    <select id="front-select" onchange="switchFront(this.value)" style="background:#2c2c2c;color:#fff;border:2px solid #c0392b;border-radius:8px;padding:6px 12px;font-family:Tahoma,Arial,sans-serif;font-size:13px;font-weight:bold;cursor:pointer;min-width:160px;">
+      <option value="mechanical">⚙ مکانیکال</option>
+      <option value="paint">🎨 رنگ و سندبلاست</option>
+      <option value="insulation">🧱 عایق</option>
+      <option value="kitchen">🍽 آشپزخانه</option>
+    </select>
+  </div>
+  <div id="front-badge" style="background:#c0392b;color:#fff;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:bold;white-space:nowrap;">⚙ مکانیکال</div>
+  <div class="header-actions">
+    <span class="save-dot" id="save-dot" title="ذخیره شده"></span>
+    <div style="position:relative;display:inline-block;">
+      <button id="btn-brightness" onclick="changeBrightness()" title="روشنایی" style="background:rgba(255,255,255,0.12);color:#fff;border:1.5px solid rgba(255,255,255,0.3);border-radius:8px;padding:5px 11px;font-size:18px;cursor:pointer;line-height:1;transition:all 0.2s;">☀️</button>
+    <button onclick="toggleLangMenu()" title="تغییر زبان" style="background:rgba(255,255,255,0.12);color:#fff;border:1.5px solid rgba(255,255,255,0.3);border-radius:8px;padding:5px 11px;font-size:18px;cursor:pointer;line-height:1;transition:all 0.2s;">🌐</button>
+      <div id="lang-menu" style="display:none;position:absolute;top:36px;left:0;background:#2c2c2c;border:1.5px solid #c0392b;border-radius:8px;overflow:hidden;z-index:999;min-width:140px;box-shadow:0 6px 20px rgba(0,0,0,0.4);">
+        <button onclick="setLang('fa')" class="lang-opt" id="lopt-fa">🇮🇷 فارسی</button>
+        <button onclick="setLang('ar')" class="lang-opt" id="lopt-ar">🇸🇦 عربی</button>
+        <button onclick="setLang('ku')" class="lang-opt" id="lopt-ku">🏴 کوردی سورانی</button>
+        <button onclick="setLang('tr')" class="lang-opt" id="lopt-tr">🇹🇷 Türkçe</button>
+        <button onclick="setLang('en')" class="lang-opt" id="lopt-en">🇬🇧 English</button>
+      </div>
+    </div>
+    <button class="header-actions btn-settings" onclick="openSettings()" id="btn-cfg" title="تنظیمات">⚙</button>
+    <button class="header-actions btn-backup" onclick="doBackup()" id="btn-bk" title="بک‌آپ">💾</button>
+    <button class="header-actions btn-restore" onclick="document.getElementById('restore-input').click()" id="btn-rs" title="بازیابی">📂</button>
+    <input type="file" id="restore-input" accept=".json" style="display:none" onchange="doRestore(event)">
+  </div>
+</div>
+
+<!-- QUICK BARS -->
+<div class="quick-section">
+  <div class="quick-bar return-bar">
+    <div class="bar-title" id="t-ret-title">🔄 برگشت به انبار</div>
+    <div class="fields">
+      <div class="fg"><label>انتخاب از خروجی‌ها</label><select id="r-exit-ref"></select></div>
+      <div class="fg"><label id="lbl-r-person">نام برگشت‌دهنده</label><input id="r-sender" type="text" placeholder="نام شخص..."></div>
+      <div class="fg" style="max-width:80px"><label>تعداد برگشتی</label><input id="r-qty" type="number" min="1" value="" placeholder="تعداد"></div>
+      <button class="btn btn-ret" onclick="addReturn()" id="btn-ret">ثبت برگشت</button>
+    </div>
+  </div>
+  <div class="quick-bar scrap-bar">
+    <div class="bar-title" id="t-sc-title">🗑 ابزار اسقاطی / خراب</div>
+    <div class="fields">
+      <div class="fg"><label>انتخاب از خروجی‌ها</label><select id="s-exit-ref"></select></div>
+      <div class="fg"><label id="lbl-s-person">مسئول / خراب‌کننده</label><input id="s-person" type="text" placeholder="نام شخص..."></div>
+      <div class="fg" style="max-width:80px"><label>تعداد خراب</label><input id="s-qty" type="number" min="1" value="" placeholder="تعداد"></div>
+      <button class="btn btn-sc" onclick="addScrap()" id="btn-sc">ثبت اسقاطی</button>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-label" id="t-s1">کل اقلام</div><div class="stat-value" id="stat-items">0</div></div>
+  <div class="stat"><div class="stat-label" id="t-s2">موجودی کل</div><div class="stat-value green" id="stat-qty">0</div></div>
+  <div class="stat"><div class="stat-label" id="t-s3">ورودی کل</div><div class="stat-value green" id="stat-in">0</div></div>
+  <div class="stat"><div class="stat-label" id="t-s4">خروجی کل</div><div class="stat-value red" id="stat-out">0</div></div>
+  <div class="stat"><div class="stat-label" id="t-s5">اسقاطی کل</div><div class="stat-value amber" id="stat-scrap">0</div></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="showTab('inventory')" id="tab-inv">📦 موجودی</button>
+  <button class="tab" onclick="showTab('purchase')" id="tab-purchase">🧾 ثبت خرید</button>
+  <button class="tab" onclick="showTab('entry')" id="tab-entry">➕ ورود کالا</button>
+  <button class="tab" onclick="showTab('exit')" id="tab-exit">➖ خروج کالا</button>
+  <button class="tab" onclick="showTab('scrap')" id="tab-scrap">🗑 اسقاطی‌ها</button>
+  <button class="tab" onclick="showTab('log')" id="tab-log">📋 گزارش کل</button>
+  <button class="tab" onclick="showTab('person')" id="tab-person">🔍 جستجو تحویل‌گیرنده</button>
+</div>
+
+<!-- PANEL: موجودی -->
+<div class="panel active" id="panel-inventory">
+  <div class="filter-bar">
+    <input type="text" id="search" placeholder="جستجو در کالاها...">
+    <button class="btn btn-print" onclick="window.print()">🖨 چاپ</button>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>نام کالا</th><th>دسته‌بندی</th><th>موجودی</th><th>واحد</th><th>وضعیت</th></tr></thead>
+      <tbody id="inv-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PANEL: ورود -->
+<div class="panel" id="panel-entry">
+  <div class="form-row">
+    <div class="fg" style="flex:2"><label>نام کالا</label><input id="e-name" type="text" placeholder="مثلاً: دستگاه جوش برق"></div>
+    <div class="fg"><label>دسته‌بندی</label>
+      <select id="e-cat">
+        <option value="مصرفی">مصرفی</option>
+        <option value="غیر مصرفی">غیر مصرفی</option>
+      </select>
+    </div>
+    <div class="fg" style="max-width:90px"><label>تعداد</label><input id="e-qty" type="number" min="1" value="" placeholder="تعداد"></div>
+    <div class="fg"><label>واحد</label>
+      <select id="e-unit">
+        <option value="عدد">عدد</option>
+        <option value="دستگاه">دستگاه</option>
+        <option value="جعبه">جعبه</option>
+        <option value="کیلوگرم">کیلوگرم</option>
+      </select>
+    </div>
+    <div class="fg" style="max-width:140px"><label>📅 تاریخ (شمسی)</label><input id="e-jdate" type="text" placeholder="۱۴۰۳/۰۱/۰۱" maxlength="10"></div>
+    <div class="fg"><label>توضیحات</label><input id="e-note" type="text" placeholder="اختیاری"></div>
+    <button class="btn btn-in" onclick="addEntry()" style="margin-top:18px">ثبت ورود</button>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>تاریخ شمسی</th><th>نام کالا</th><th>دسته</th><th>تعداد</th><th>واحد</th><th>توضیحات</th><th></th></tr></thead>
+      <tbody id="entry-log"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PANEL: خروج -->
+<div class="panel" id="panel-exit">
+  <div class="form-row">
+    <div class="fg" style="flex:2"><label>انتخاب کالا</label><select id="x-item"></select></div>
+    <div class="fg"><label>نام تحویل‌گیرنده</label><input id="x-receiver" type="text" placeholder="نام شخص یا واحد..."></div>
+    <div class="fg" style="max-width:90px"><label>تعداد</label><input id="x-qty" type="number" min="1" value="" placeholder="تعداد"></div>
+    <div class="fg" style="max-width:140px"><label>📅 تاریخ (شمسی)</label><input id="x-jdate" type="text" placeholder="۱۴۰۳/۰۱/۰۱" maxlength="10"></div>
+    <button class="btn btn-out" onclick="addExit()" style="margin-top:18px">ثبت خروج</button>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>تاریخ شمسی</th><th>نام کالا</th><th>تعداد</th><th>واحد</th><th>تحویل‌گیرنده</th><th>وضعیت</th><th></th></tr></thead>
+      <tbody id="exit-log"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PANEL: ثبت خرید -->
+<div class="panel" id="panel-purchase">
+
+  <!-- فرم فاکتور -->
+  <div class="form-row" style="border-right-color:#c0392b; margin-bottom:16px;">
+    <div class="fg" style="max-width:160px">
+      <label>📋 شماره فاکتور</label>
+      <input id="p-invoice" type="text" placeholder="مثلاً: INV-001">
+    </div>
+    <div class="fg" style="max-width:160px">
+      <label>📅 تاریخ فاکتور</label>
+      <input id="p-date" type="text" placeholder="مثلاً: ۱۴۰۳/۰۵/۱۲">
+    </div>
+    <div class="fg">
+      <label>🏪 نام فروشنده</label>
+      <input id="p-supplier" type="text" placeholder="نام شرکت یا فروشگاه...">
+    </div>
+    <div class="fg">
+      <label>📝 توضیحات</label>
+      <input id="p-note" type="text" placeholder="اختیاری">
+    </div>
+  </div>
+
+  <!-- اقلام فاکتور -->
+  <div style="background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:16px;margin-bottom:14px;border-right:4px solid #2c2c2c;">
+    <div style="font-size:13px;font-weight:bold;color:#2c2c2c;margin-bottom:12px;">➕ افزودن قلم به فاکتور</div>
+    <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
+      <div class="fg" style="flex:2"><label>نام کالا</label><input id="pi-name" type="text" placeholder="نام کالا..."></div>
+      <div class="fg"><label>دسته‌بندی</label>
+        <select id="pi-cat">
+          <option value="مصرفی">مصرفی</option>
+          <option value="غیر مصرفی">غیر مصرفی</option>
+        </select>
+      </div>
+      <div class="fg" style="max-width:90px"><label>تعداد</label><input id="pi-qty" type="number" min="1" value="" placeholder="تعداد"></div>
+      <div class="fg"><label>واحد</label>
+        <select id="pi-unit">
+          <option value="عدد">عدد</option>
+          <option value="دستگاه">دستگاه</option>
+          <option value="جعبه">جعبه</option>
+          <option value="کیلوگرم">کیلوگرم</option>
+        </select>
+      </div>
+      <div class="fg"><label>قیمت واحد</label>
+      <div style="display:flex;gap:6px;">
+        <input id="pi-price" type="number" min="0" value="" placeholder="قیمت" style="flex:1;">
+        <select id="pi-currency" style="width:90px;font-weight:bold;">
+          <option value="IQD">🇮🇶 IQD</option>
+          <option value="USD">🇺🇸 USD</option>
+          <option value="تومان">🇮🇷 تومان</option>
+          <option value="TRY">🇹🇷 TRY</option>
+        </select>
+      </div>
+    </div>
+      <button class="btn btn-ret" onclick="addPurchaseItem()" style="margin-top:18px">+ افزودن قلم</button>
+    </div>
+  </div>
+
+  <!-- جدول اقلام فاکتور جاری -->
+  <div id="p-items-wrap" style="display:none;margin-bottom:14px;">
+    <div style="background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.08);overflow:hidden;border:1px solid #e0e0e0;">
+      <div style="background:#2c2c2c;color:#fff;padding:10px 14px;font-size:13px;font-weight:bold;display:flex;justify-content:space-between;align-items:center;">
+        <span>اقلام فاکتور جاری</span>
+        <span id="p-items-count" style="background:#c0392b;padding:2px 10px;border-radius:20px;font-size:12px;">0 قلم</span>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <thead>
+          <tr style="background:#f5f5f5;">
+            <th style="text-align:right;padding:8px 12px;color:#555;font-size:12px;">نام کالا</th>
+            <th style="text-align:right;padding:8px 12px;color:#555;font-size:12px;">دسته</th>
+            <th style="text-align:right;padding:8px 12px;color:#555;font-size:12px;">تعداد</th>
+            <th style="text-align:right;padding:8px 12px;color:#555;font-size:12px;">واحد</th>
+            <th style="text-align:right;padding:8px 12px;color:#555;font-size:12px;">قیمت واحد</th>
+            <th style="text-align:right;padding:8px 12px;color:#555;font-size:12px;">جمع</th>
+            <th style="padding:8px 12px;"></th>
+          </tr>
+        </thead>
+        <tbody id="p-items-body"></tbody>
+        <tfoot>
+          <tr style="background:#fff8f8;border-top:2px solid #c0392b;">
+            <td colspan="5" style="padding:10px 12px;font-weight:bold;color:#2c2c2c;text-align:right;">جمع کل فاکتور</td>
+            <td style="padding:10px 12px;font-weight:bold;color:#c0392b;font-size:15px;text-align:right;" id="p-total">۰ تومان</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
+      <button class="btn btn-cancel" onclick="clearPurchase()" style="background:#eee;color:#555;border:none;">🗑 پاک کردن</button>
+      <button class="btn btn-in" onclick="submitPurchase()">✅ ثبت نهایی فاکتور و افزودن به انبار</button>
+    </div>
+  </div>
+
+  <!-- لیست فاکتورهای ثبت‌شده -->
+  <div style="margin-top:8px;">
+    <div style="font-size:13px;font-weight:bold;color:#2c2c2c;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;">
+      <span>📋 فاکتورهای ثبت‌شده</span>
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="p-search" placeholder="جستجو فاکتور..." style="width:180px;padding:5px 10px;font-size:12px;" oninput="renderPurchases()">
+        <button class="btn btn-print" onclick="window.print()">🖨 چاپ</button>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>تاریخ ثبت</th><th>شماره فاکتور</th><th>تاریخ فاکتور</th><th>فروشنده</th><th>تعداد اقلام</th><th>جمع کل</th><th>توضیحات</th><th></th></tr></thead>
+        <tbody id="purchase-log"></tbody>
+      </table>
+    </div>
+    <!-- جمع‌بندی کلی -->
+    <div style="background:#fff;border-radius:10px;margin-top:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);display:flex;gap:20px;flex-wrap:wrap;border-top:3px solid #c0392b;">
+      <div><div style="font-size:11px;color:#888;margin-bottom:4px;">تعداد فاکتورها</div><div style="font-size:20px;font-weight:bold;color:#2c2c2c;" id="p-stat-count">0</div></div>
+      <div><div style="font-size:11px;color:#888;margin-bottom:4px;">جمع کل خریدها</div><div style="font-size:20px;font-weight:bold;color:#c0392b;" id="p-stat-total">۰ تومان</div></div>
+      <div><div style="font-size:11px;color:#888;margin-bottom:4px;">میانگین هر فاکتور</div><div style="font-size:20px;font-weight:bold;color:#2c2c2c;" id="p-stat-avg">۰ تومان</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PANEL: اسقاطی -->
+<div class="panel" id="panel-scrap">
+  <div class="filter-bar">
+    <button class="btn btn-print" onclick="window.print()">🖨 چاپ گزارش اسقاطی</button>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>تاریخ</th><th>نام کالا</th><th>دسته</th><th>تعداد</th><th>واحد</th><th>مسئول / خراب‌کننده</th></tr></thead>
+      <tbody id="scrap-log"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PANEL: گزارش کل -->
+<div class="panel" id="panel-log">
+  <div class="filter-bar">
+    <select id="log-filter" onchange="renderLog()" style="width:160px">
+      <option value="all">همه تراکنش‌ها</option>
+      <option value="in">فقط ورودی</option>
+      <option value="out">فقط خروجی</option>
+      <option value="return">فقط برگشتی</option>
+      <option value="scrap">فقط اسقاطی</option>
+    </select>
+    <button class="btn btn-print" onclick="window.print()">🖨 چاپ</button>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>تاریخ و ساعت</th><th>نوع</th><th>نام کالا</th><th>دسته</th><th>تعداد</th><th>نام طرف / توضیحات</th></tr></thead>
+      <tbody id="log-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PANEL: جستجو تحویل‌گیرنده -->
+<div class="panel" id="panel-person">
+  <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:14px;border-right:4px solid #c0392b;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+    <div style="flex:1;min-width:200px;">
+      <label style="font-size:12px;color:#6b6b6b;display:block;margin-bottom:4px;">🔍 جستجو با نام تحویل‌گیرنده</label>
+      <input id="person-search" type="text" placeholder="نام شخص را وارد کنید..." oninput="renderPersonSearch()" style="width:100%;padding:8px 12px;border:2px solid #c0bfbf;border-radius:7px;font-family:Tahoma,Arial,sans-serif;font-size:14px;">
+    </div>
+    <button onclick="renderPersonSearch()" style="background:linear-gradient(135deg,#922b21,#c0392b);color:#fff;border:none;border-radius:7px;padding:8px 20px;font-size:13px;cursor:pointer;font-weight:bold;font-family:Tahoma,Arial,sans-serif;">جستجو</button>
+    <button onclick="document.getElementById('person-search').value='';renderPersonSearch();" style="background:#f0f0f0;color:#555;border:1.5px solid #ddd;border-radius:7px;padding:8px 14px;font-size:13px;cursor:pointer;font-family:Tahoma,Arial,sans-serif;">پاک کردن</button>
+  </div>
+
+  <!-- کارت خلاصه نتایج -->
+  <div id="person-summary" style="display:none;background:#fff8f8;border-radius:10px;padding:14px 16px;margin-bottom:14px;border:1.5px solid #f5a9a3;display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+    <div style="font-size:18px;">👤</div>
+    <div>
+      <div style="font-size:14px;font-weight:bold;color:#2c2c2c;" id="person-name-title">—</div>
+      <div style="font-size:12px;color:#888;">تحویل‌گیرنده</div>
+    </div>
+    <div style="border-right:1.5px solid #eee;padding-right:16px;margin-right:4px;">
+      <div style="font-size:11px;color:#888;">تعداد خروجی</div>
+      <div style="font-size:20px;font-weight:bold;color:#c0392b;" id="person-stat-count">0</div>
+    </div>
+    <div style="border-right:1.5px solid #eee;padding-right:16px;margin-right:4px;">
+      <div style="font-size:11px;color:#888;">مجموع اقلام خروجی</div>
+      <div style="font-size:20px;font-weight:bold;color:#2c2c2c;" id="person-stat-qty">0</div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#888;">هنوز نزدش</div>
+      <div style="font-size:20px;font-weight:bold;color:#d97706;" id="person-stat-remaining">0</div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>تاریخ خروج</th>
+          <th>نام کالا</th>
+          <th>تعداد خروجی</th>
+          <th>واحد</th>
+          <th>تحویل‌گیرنده</th>
+          <th>وضعیت</th>
+          <th>مانده نزد ایشان</th>
+        </tr>
+      </thead>
+      <tbody id="person-log"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL: تنظیمات -->
+<div class="modal-bg" id="modal-settings">
+  <div class="modal">
+    <h2>⚙ تنظیمات کارگاه</h2>
+    <div class="fg"><label>نام کارگاه</label><input id="cfg-workshop" type="text" placeholder="مثلاً: کارگاه تولیدی الفا"></div>
+    <div class="fg"><label>آدرس / محل</label><input id="cfg-address" type="text" placeholder="آدرس کارگاه (اختیاری)"></div>
+    <div class="fg"><label>مدیر انبار</label><input id="cfg-manager" type="text" placeholder="نام مدیر انبار (اختیاری)"></div>
+    <div style="border-top:1px solid #eee;padding-top:12px;margin-top:8px;display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:13px;color:#555;">
+        🔒 رمز ورود:
+        <span id="pin-status-text" style="font-weight:bold;color:#c0392b;margin-right:6px;"></span>
+      </div>
+      <button onclick="openPinPopup()" style="background:#f5f5f5;border:1.5px solid #ddd;border-radius:7px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:Tahoma,Arial,sans-serif;color:#333;">تغییر رمز</button>
+    </div>
+    <div style="border-top:1.5px solid #fee;padding-top:12px;margin-top:10px;">
+      <button onclick="resetAllData()" style="background:#fdecea;color:#c0392b;border:1.5px solid #f5a9a3;border-radius:7px;padding:7px 16px;font-size:12px;cursor:pointer;font-family:Tahoma,Arial,sans-serif;font-weight:bold;width:100%;">🗑 پاک کردن تمام داده‌های برنامه</button>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-cancel" onclick="closeSettings()">انصراف</button>
+      <button class="btn btn-save" onclick="saveSettings()">ذخیره</button>
+    </div>
+  </div>
+</div>
+
+<!-- پنجره کوچک تنظیم PIN -->
+<div id="pin-popup-bg" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:300;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:20px 24px;width:280px;box-shadow:0 8px 30px rgba(0,0,0,0.2);border-top:3px solid #c0392b;text-align:center;">
+    <div style="font-size:14px;font-weight:bold;color:#2c2c2c;margin-bottom:14px;">🔒 تنظیم رمز ورود</div>
+    <div style="font-size:12px;color:#888;margin-bottom:10px;">رمز جدید ۴ رقمی وارد کنید<br>برای حذف رمز، خالی بگذارید</div>
+    <div id="pin-set-dots" style="display:flex;gap:10px;justify-content:center;margin-bottom:14px;">
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,60px);gap:8px;justify-content:center;margin-bottom:10px;">
+      <button class="pin-btn" style="width:60px;height:48px;font-size:18px;" onclick="pinSetPress('1')">۱</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:18px;" onclick="pinSetPress('2')">۲</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:18px;" onclick="pinSetPress('3')">۳</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:18px;" onclick="pinSetPress('4')">۴</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:18px;" onclick="pinSetPress('5')">۵</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:18px;" onclick="pinSetPress('6')">۶</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:18px;" onclick="pinSetPress('7')">۷</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:18px;" onclick="pinSetPress('8')">۸</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:18px;" onclick="pinSetPress('9')">۹</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:14px;background:#5a1a1a;" onclick="pinSetPress('del')">⌫</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:18px;" onclick="pinSetPress('0')">۰</button>
+      <button class="pin-btn" style="width:60px;height:48px;font-size:13px;background:#c0392b;" onclick="pinSetSave()">✓</button>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;">
+      <button onclick="pinSetClear()" style="background:#fee;color:#c0392b;border:1.5px solid #f5a9a3;border-radius:7px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:Tahoma,Arial,sans-serif;">حذف رمز</button>
+      <button onclick="closePinPopup()" style="background:#f0f0f0;color:#555;border:1.5px solid #ddd;border-radius:7px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:Tahoma,Arial,sans-serif;">انصراف</button>
+    </div>
+  </div>
+</div>
+
+<!-- مودال تأیید PIN برای حذف/ویرایش -->
+<div id="pin-confirm-bg" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:400;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:20px 24px;width:260px;box-shadow:0 8px 30px rgba(0,0,0,0.25);border-top:3px solid #c0392b;text-align:center;">
+    <div style="font-size:14px;font-weight:bold;color:#2c2c2c;margin-bottom:6px;" id="pin-confirm-title">🔒 تأیید با رمز</div>
+    <div style="font-size:12px;color:#888;margin-bottom:12px;" id="pin-confirm-desc">برای حذف رمز وارد کنید</div>
+    <div id="pin-confirm-dots" style="display:flex;gap:10px;justify-content:center;margin-bottom:12px;">
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,54px);gap:7px;justify-content:center;margin-bottom:10px;">
+      <button class="pin-btn" style="width:54px;height:44px;font-size:16px;" onclick="pinConfPress('1')">۱</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:16px;" onclick="pinConfPress('2')">۲</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:16px;" onclick="pinConfPress('3')">۳</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:16px;" onclick="pinConfPress('4')">۴</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:16px;" onclick="pinConfPress('5')">۵</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:16px;" onclick="pinConfPress('6')">۶</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:16px;" onclick="pinConfPress('7')">۷</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:16px;" onclick="pinConfPress('8')">۸</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:16px;" onclick="pinConfPress('9')">۹</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:13px;background:#5a1a1a;" onclick="pinConfPress('del')">⌫</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:16px;" onclick="pinConfPress('0')">۰</button>
+      <button class="pin-btn" style="width:54px;height:44px;font-size:13px;background:#c0392b;" onclick="pinConfPress('ok')">✓</button>
+    </div>
+    <div id="pin-confirm-error" style="color:#c0392b;font-size:12px;min-height:16px;"></div>
+    <button onclick="closePinConfirm()" style="margin-top:8px;background:#f0f0f0;border:none;border-radius:6px;padding:5px 16px;font-size:12px;cursor:pointer;font-family:Tahoma,Arial,sans-serif;">انصراف</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+var lang = 'fa';
+var currentFront = 'mechanical';
+var fronts = {
+  mechanical:  { label:'⚙ مکانیکال',        color:'#1a6fb5', inventory:{}, transactions:[], purchases:[] },
+  paint:       { label:'🎨 رنگ و سندبلاست', color:'#8e44ad', inventory:{}, transactions:[], purchases:[] },
+  insulation:  { label:'🧱 عایق',            color:'#d97706', inventory:{}, transactions:[], purchases:[] },
+  kitchen:     { label:'🍽 آشپزخانه',        color:'#16a34a', inventory:{}, transactions:[], purchases:[] }
+};
+var inventory = fronts[currentFront].inventory;
+var transactions = fronts[currentFront].transactions;
+var purchases = fronts[currentFront].purchases;
+var currentPurchaseItems = [];
+var settings = { workshop: '', address: '', manager: '' };
+
+var TXT = {
+  fa: {
+    title:'سیستم مدیریت انبار', noWorkshop:'Asia Oil Metallurgsts',
+    s1:'کل اقلام', s2:'موجودی کل', s3:'ورودی کل', s4:'خروجی کل', s5:'اسقاطی کل',
+    tabInv:'📦 موجودی', tabEntry:'➕ ورود کالا', tabExit:'➖ خروج کالا', tabScrap:'🗑 اسقاطی‌ها', tabLog:'📋 گزارش کل',
+    tabPurchase:'🧾 ثبت خرید',
+    retTitle:'🔄 برگشت به انبار', scTitle:'🗑 ابزار اسقاطی / خراب',
+    lRetPerson:'نام برگشت‌دهنده', lScPerson:'مسئول / خراب‌کننده',
+    btnRet:'ثبت', btnSc:'ثبت', btnCfg:'⚙', btnBk:'💾', btnRs:'📂',
+    in:'ورود', out:'خروج', ret:'برگشت', sc:'اسقاطی',
+    ok:'موجود', low:'کم', zero:'ناموجود', empty:'رکوردی یافت نشد',
+    noStock:'موجودی کافی نیست', flag:'🇮🇷', dir:'rtl'
+  },
+  ar: {
+    title:'نظام إدارة المخزن', noWorkshop:'Asia Oil Metallurgsts',
+    s1:'إجمالي الأصناف', s2:'إجمالي المخزون', s3:'إجمالي الواردات', s4:'إجمالي الصادرات', s5:'المهملات',
+    tabInv:'📦 المخزون', tabEntry:'➕ إدخال', tabExit:'➖ إخراج', tabScrap:'🗑 المهملات', tabLog:'📋 السجل',
+    tabPurchase:'🧾 تسجيل الشراء',
+    retTitle:'🔄 الإرجاع للمخزن', scTitle:'🗑 الأدوات المهملة',
+    lRetPerson:'اسم المُعيد', lScPerson:'المسؤول / المُتلف',
+    btnRet:'تسجيل', btnSc:'تسجيل', btnCfg:'⚙', btnBk:'💾', btnRs:'📂',
+    in:'وارد', out:'صادر', ret:'مرتجع', sc:'مهمل',
+    ok:'متاح', low:'منخفض', zero:'غير متاح', empty:'لا توجد سجلات',
+    noStock:'المخزون غير كافٍ', flag:'🇸🇦', dir:'rtl'
+  },
+  ku: {
+    title:'سیستەمی بەڕێوەبردنی کۆگا', noWorkshop:'Asia Oil Metallurgsts',
+    s1:'کۆی کاڵاکان', s2:'کۆی ئەنبار', s3:'کۆی داخلکراو', s4:'کۆی دەرکراو', s5:'کۆی خراپبوو',
+    tabInv:'📦 ئەنبار', tabEntry:'➕ داخلکردن', tabExit:'➖ دەرکردن', tabScrap:'🗑 خراپبووەکان', tabLog:'📋 ڕاپۆرت',
+    tabPurchase:'🧾 تۆمارکردنی کڕین',
+    retTitle:'🔄 گەڕاندنەوە بۆ ئەنبار', scTitle:'🗑 ئامێری خراپبوو',
+    lRetPerson:'ناوی گەڕێنەرەوە', lScPerson:'ئەو کەسەی خراپی کرد',
+    btnRet:'تۆمارکردن', btnSc:'تۆمارکردن', btnCfg:'⚙', btnBk:'💾', btnRs:'📂',
+    in:'داخلکراو', out:'دەرکراو', ret:'گەڕاندنەوە', sc:'خراپبوو',
+    ok:'بەردەستە', low:'کەم', zero:'نییە', empty:'هیچ تۆماری نییە',
+    noStock:'ئەنبار بەسەر چووە', flag:'🏴', dir:'rtl'
+  },
+  tr: {
+    title:'Depo Yönetim Sistemi', noWorkshop:'Asia Oil Metallurgsts',
+    s1:'Toplam Ürün', s2:'Toplam Stok', s3:'Toplam Giriş', s4:'Toplam Çıkış', s5:'Hurda',
+    tabInv:'📦 Stok', tabEntry:'➕ Giriş', tabExit:'➖ Çıkış', tabScrap:'🗑 Hurda', tabLog:'📋 Rapor',
+    tabPurchase:'🧾 Satın Alma',
+    retTitle:'🔄 Depoya İade', scTitle:'🗑 Hurda / Bozuk Alet',
+    lRetPerson:'İade Eden Kişi', lScPerson:'Sorumlu Kişi',
+    btnRet:'Kaydet', btnSc:'Kaydet', btnCfg:'⚙', btnBk:'💾', btnRs:'📂',
+    in:'Giriş', out:'Çıkış', ret:'İade', sc:'Hurda',
+    ok:'Mevcut', low:'Az', zero:'Yok', empty:'Kayıt bulunamadı',
+    noStock:'Stok yetersiz', flag:'🇹🇷', dir:'ltr'
+  },
+  en: {
+    title:'Warehouse Management System', noWorkshop:'Asia Oil Metallurgsts',
+    s1:'Total Items', s2:'Total Qty', s3:'Total In', s4:'Total Out', s5:'Scrapped',
+    tabInv:'📦 Inventory', tabEntry:'➕ Entry', tabExit:'➖ Exit', tabScrap:'🗑 Scrapped', tabLog:'📋 Full Log',
+    tabPurchase:'🧾 Purchase',
+    retTitle:'🔄 Return to Warehouse', scTitle:'🗑 Scrapped / Broken Tools',
+    lRetPerson:'Returned by', lScPerson:'Responsible person',
+    btnRet:'Register', btnSc:'Register', btnCfg:'⚙', btnBk:'💾', btnRs:'📂',
+    in:'In', out:'Out', ret:'Return', sc:'Scrap',
+    ok:'In Stock', low:'Low', zero:'Out of Stock', empty:'No records found',
+    noStock:'Insufficient stock', flag:'🇬🇧', dir:'ltr'
+  }
+};
+
+var LANG_ORDER = ['fa','ar','ku','tr','en'];
+
+function toggleLangMenu() {
+  var m = document.getElementById('lang-menu');
+  m.style.display = m.style.display==='none' ? 'block' : 'none';
+}
+
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  var d = TXT[l] || TXT['fa'];
+  document.documentElement.dir = d.dir || 'rtl';
+  // آپدیت active در منو
+  LANG_ORDER.forEach(function(x){
+    var el = document.getElementById('lopt-'+x);
+    if(el) el.classList.toggle('active', x===l);
+  });
+  document.getElementById('lang-menu').style.display='none';
+  applyLabels();
+  renderAll();
+}
+
+function applyLabels() {
+  var d = TXT[lang] || TXT['fa'];
+  document.getElementById('hdr-title').textContent = d.title;
+  document.getElementById('hdr-workshop').textContent = settings.workshop || d.noWorkshop;
+  document.title = d.title;
+  document.getElementById('t-s1').textContent = d.s1;
+  document.getElementById('t-s2').textContent = d.s2;
+  document.getElementById('t-s3').textContent = d.s3;
+  document.getElementById('t-s4').textContent = d.s4;
+  document.getElementById('t-s5').textContent = d.s5;
+  document.getElementById('tab-inv').textContent = d.tabInv;
+  document.getElementById('tab-entry').textContent = d.tabEntry;
+  document.getElementById('tab-exit').textContent = d.tabExit;
+  document.getElementById('tab-scrap').textContent = d.tabScrap;
+  document.getElementById('tab-log').textContent = d.tabLog;
+  if(document.getElementById('tab-purchase')) document.getElementById('tab-purchase').textContent = d.tabPurchase;
+  document.getElementById('t-ret-title').textContent = d.retTitle;
+  document.getElementById('t-sc-title').textContent = d.scTitle;
+  document.getElementById('lbl-r-person').textContent = d.lRetPerson;
+  document.getElementById('lbl-s-person').textContent = d.lScPerson;
+  document.getElementById('btn-ret').textContent = d.btnRet;
+  document.getElementById('btn-sc').textContent = d.btnSc;
+  document.getElementById('btn-cfg').textContent = d.btnCfg;
+  document.getElementById('btn-bk').textContent = d.btnBk;
+  document.getElementById('btn-rs').textContent = d.btnRs;
+}
+
+function now() {
+  return new Date().toLocaleString('fa-IR');
+}
+
+function getKey(name) { return name.trim().toLowerCase(); }
+
+var FRONT_COLORS = { mechanical:'#1a6fb5', paint:'#8e44ad', insulation:'#d97706', kitchen:'#16a34a' };
+
+function switchFront(f) {
+  if(!fronts[f]) return;
+  currentFront = f;
+  inventory    = fronts[currentFront].inventory;
+  transactions = fronts[currentFront].transactions;
+  purchases    = fronts[currentFront].purchases;
+  currentPurchaseItems = [];
+  // آپدیت badge
+  var badge = document.getElementById('front-badge');
+  badge.textContent = fronts[f].label;
+  badge.style.background = FRONT_COLORS[f] || '#c0392b';
+  // آپدیت رنگ هدر بار
+  document.querySelector('.header').style.borderBottom = '3px solid ' + (FRONT_COLORS[f] || '#c0392b');
+  // آپدیت select
+  document.getElementById('front-select').value = f;
+  // ذخیره
+  localStorage.setItem('wh_currentFront', f);
+  updateStats(); renderAll(); refreshSelects(); populateExitRefs();
+  showToast('✓ جبهه: ' + fronts[f].label, 'success', 2000);
+}
+
+var _saveTimer = null;
+var _unsaved = false;
+
+function showToast(msg, type, dur) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + (type||'');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.className = 'toast'; }, dur||2000);
+}
+
+function saveToStorage() {
+  var dot = document.getElementById('save-dot');
+  dot.classList.add('saving');
+  try {
+    localStorage.setItem('wh_fronts', JSON.stringify(fronts));
+    localStorage.setItem('wh_settings', JSON.stringify(settings));
+    localStorage.setItem('wh_lang', lang);
+    localStorage.setItem('wh_currentFront', currentFront);
+    _unsaved = false;
+    setTimeout(function(){ dot.classList.remove('saving'); }, 600);
+  } catch(e) {
+    dot.classList.remove('saving');
+    showToast('⚠ خطا در ذخیره‌سازی!', 'warning', 3000);
+  }
+}
+
+function markUnsaved() {
+  _unsaved = true;
+  var dot = document.getElementById('save-dot');
+  dot.classList.add('saving');
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(function(){
+    saveToStorage();
+    showToast('✓ ذخیره شد', 'success', 1500);
+  }, 800);
+}
+
+function loadFromStorage() {
+  try {
+    var fr  = localStorage.getItem('wh_fronts');
+    var cfg = localStorage.getItem('wh_settings');
+    var lg  = localStorage.getItem('wh_lang');
+    var cf  = localStorage.getItem('wh_currentFront');
+    if(fr) {
+      var saved = JSON.parse(fr);
+      Object.keys(saved).forEach(function(k){
+        if(fronts[k]) {
+          fronts[k].inventory    = saved[k].inventory    || {};
+          fronts[k].transactions = saved[k].transactions || [];
+          fronts[k].purchases    = saved[k].purchases    || [];
+        }
+      });
+    }
+    if(cfg) settings = JSON.parse(cfg);
+    if(lg)  lang = lg;
+    if(cf && fronts[cf]) currentFront = cf;
+    inventory    = fronts[currentFront].inventory;
+    transactions = fronts[currentFront].transactions;
+    purchases    = fronts[currentFront].purchases;
+  } catch(e) {}
+}
+
+function doBackup() {
+  var data = { version:2, date: new Date().toISOString(), fronts: fronts, settings: settings };
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  var dateStr = new Date().toLocaleDateString('fa-IR').replace(/\//g, '-');
+  a.download = 'warehouse-backup-' + dateStr + '.json';
+  a.click();
+}
+
+function doRestore(event) {
+  var file = event.target.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if(data.fronts) {
+        Object.keys(data.fronts).forEach(function(k){
+          if(fronts[k]) {
+            fronts[k].inventory    = data.fronts[k].inventory    || {};
+            fronts[k].transactions = data.fronts[k].transactions || [];
+            fronts[k].purchases    = data.fronts[k].purchases    || [];
+          }
+        });
+      } else {
+        // سازگاری با نسخه قدیم
+        if(data.inventory)    fronts[currentFront].inventory    = data.inventory;
+        if(data.transactions) fronts[currentFront].transactions = data.transactions;
+        if(data.purchases)    fronts[currentFront].purchases    = data.purchases;
+      }
+      if(data.settings) settings = data.settings;
+      inventory    = fronts[currentFront].inventory;
+      transactions = fronts[currentFront].transactions;
+      purchases    = fronts[currentFront].purchases;
+      saveToStorage();
+      applyLabels();
+      renderAll();
+      updateStats();
+      refreshSelects();
+      showToast('✓ بازیابی با موفقیت انجام شد', 'success', 2500);
+    } catch(err) {
+      alert('خطا در خواندن فایل بک‌آپ');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function openSettings() {
+  document.getElementById('cfg-workshop').value = settings.workshop || '';
+  document.getElementById('cfg-address').value = settings.address || '';
+  document.getElementById('cfg-manager').value = settings.manager || '';
+  document.getElementById('pin-status-text').textContent = settings.pin ? '● ● ● ●' : 'تنظیم نشده';
+  document.getElementById('modal-settings').classList.add('open');
+}
+
+function closeSettings() {
+  document.getElementById('modal-settings').classList.remove('open');
+}
+
+function saveSettings() {
+  settings.workshop = document.getElementById('cfg-workshop').value.trim();
+  settings.address  = document.getElementById('cfg-address').value.trim();
+  settings.manager  = document.getElementById('cfg-manager').value.trim();
+  document.getElementById('hdr-workshop').textContent = settings.workshop || TXT[lang].noWorkshop;
+  saveToStorage();
+  showToast('✓ تنظیمات ذخیره شد', 'success', 1800);
+  closeSettings();
+}
+
+var pinSetBuffer = '';
+
+function openPinPopup() {
+  pinSetBuffer = '';
+  updatePinSetDots();
+  document.getElementById('pin-popup-bg').style.display='flex';
+}
+
+function closePinPopup() {
+  pinSetBuffer = '';
+  updatePinSetDots();
+  document.getElementById('pin-popup-bg').style.display='none';
+}
+
+function updatePinSetDots() {
+  document.querySelectorAll('#pin-set-dots .pin-dot').forEach(function(d,i){ d.classList.toggle('filled', i < pinSetBuffer.length); });
+}
+
+function pinSetPress(v) {
+  if(v==='del'){ pinSetBuffer = pinSetBuffer.slice(0,-1); }
+  else if(pinSetBuffer.length < 4){ pinSetBuffer += v; }
+  updatePinSetDots();
+}
+
+function pinSetSave() {
+  if(pinSetBuffer.length !== 4){ showToast('رمز باید ۴ رقم باشد', 'warning', 2000); return; }
+  settings.pin = pinSetBuffer;
+  saveToStorage();
+  document.getElementById('pin-status-text').textContent = '● ● ● ●';
+  showToast('✓ رمز جدید تنظیم شد', 'success', 2000);
+  closePinPopup();
+}
+
+function pinSetClear() {
+  settings.pin = '';
+  saveToStorage();
+  document.getElementById('pin-status-text').textContent = 'تنظیم نشده';
+  showToast('✓ رمز حذف شد', 'success', 2000);
+  closePinPopup();
+}
+
+function showTab(t) {
+  ['inventory','purchase','entry','exit','scrap','log','person'].forEach(function(p){
+    document.getElementById('panel-'+p).classList.toggle('active', p===t);
+  });
+  document.querySelectorAll('.tab').forEach(function(b,i){
+    b.classList.toggle('active', ['inventory','purchase','entry','exit','scrap','log','person'][i]===t);
+  });
+  if(t==='exit') populateExitSelect();
+}
+
+function refreshSelects() {
+  populateExitSelect();
+  populateExitRefs();
+}
+
+function populateExitRefs() {
+  var outList = transactions.filter(function(t){ return t.type==='out' && t.remaining > 0; });
+  ['r-exit-ref','s-exit-ref'].forEach(function(id){
+    var sel = document.getElementById(id);
+    if(!sel) return;
+    var prev = sel.value;
+    sel.innerHTML = '<option value="">-- انتخاب کنید --</option>';
+    outList.forEach(function(t){
+      sel.innerHTML += '<option value="'+t.id+'">'+(t.jdate||t.time)+' | '+t.name+' ('+t.remaining+'/'+t.qty+' '+t.unit+') → '+(t.party||'-')+'</option>';
+    });
+    if(prev) sel.value = prev;
+  });
+}
+
+function populateExitSelect() {
+  var sel = document.getElementById('x-item');
+  var prev = sel.value;
+  sel.innerHTML = '';
+  Object.keys(inventory).forEach(function(k){
+    var i = inventory[k];
+    if(i.qty>0) sel.innerHTML += '<option value="'+k+'">'+i.name+' ('+i.qty+' '+i.unit+')</option>';
+  });
+  if(prev) sel.value = prev;
+}
+
+function addEntry() {
+  var name = document.getElementById('e-name').value.trim();
+  var cat  = document.getElementById('e-cat').value;
+  var qty  = parseInt(document.getElementById('e-qty').value)||0;
+  var unit = document.getElementById('e-unit').value;
+  var note = document.getElementById('e-note').value.trim();
+  if(!name||qty<=0) return;
+  var key = getKey(name);
+  if(!inventory[key]) inventory[key] = {name:name, cat:cat, qty:0, unit:unit};
+  inventory[key].qty += qty;
+  transactions.push({type:'in', name:name, cat:cat, qty:qty, unit:unit, note:note, time:now()});
+  document.getElementById('e-name').value='';
+  document.getElementById('e-qty').value='1';
+  document.getElementById('e-note').value='';
+  markUnsaved(); updateStats(); renderAll(); refreshSelects();
+}
+
+// ---- تبدیل تاریخ میلادی به شمسی ----
+function toJalali(date) {
+  var g = date || new Date();
+  var gy = g.getFullYear(), gm = g.getMonth()+1, gd = g.getDate();
+  var jy, jm, jd;
+  var g_d_no, j_d_no;
+  var sal_a = [0,31,59,90,120,151,181,212,243,273,304,334];
+  gy -= 1600; gm -= 1; gd -= 1;
+  g_d_no = 365*gy + Math.floor((gy+3)/4) - Math.floor((gy+99)/100) + Math.floor((gy+399)/400);
+  for(var i=0;i<gm;i++) g_d_no += sal_a[i];
+  if(gm>1 && ((gy%4==0 && gy%100!=0)||(gy%400==0))) g_d_no++;
+  g_d_no += gd;
+  j_d_no = g_d_no - 79;
+  var j_np = Math.floor(j_d_no/12053); j_d_no %= 12053;
+  jy = 979 + 33*j_np + 4*Math.floor(j_d_no/1461);
+  j_d_no %= 1461;
+  if(j_d_no >= 366){ jy += Math.floor((j_d_no-1)/365); j_d_no = (j_d_no-1)%365; }
+  for(i=0;i<11&&j_d_no>=(31+((i>3&&i%2==1)?1:0)+(i==1?29:0));i++){ j_d_no -= 31+((i>3&&i%2==1)?1:0)+(i==1?29:0); }
+  jm = i+1; jd = j_d_no+1;
+  return String(jy)+'/'+String(jm).padStart(2,'0')+'/'+String(jd).padStart(2,'0');
+}
+
+function nowJalali() { return toJalali(new Date()); }
+
+function getExitById(id) {
+  return transactions.find(function(t){ return t.id===id && t.type==='out' && t.remaining > 0; });
+}
+
+function addEntry() {
+  var name  = document.getElementById('e-name').value.trim();
+  var cat   = document.getElementById('e-cat').value;
+  var qty   = parseInt(document.getElementById('e-qty').value)||0;
+  var unit  = document.getElementById('e-unit').value;
+  var note  = document.getElementById('e-note').value.trim();
+  var jdate = document.getElementById('e-jdate').value.trim() || nowJalali();
+  if(!name||qty<=0) return;
+  var key = getKey(name);
+  if(!inventory[key]) inventory[key] = {name:name, cat:cat, qty:0, unit:unit};
+  inventory[key].qty += qty;
+  transactions.push({id:Date.now(), type:'in', name:name, cat:cat, qty:qty, unit:unit, note:note, jdate:jdate, time:now()});
+  document.getElementById('e-name').value='';
+  document.getElementById('e-qty').value='1';
+  document.getElementById('e-note').value='';
+  document.getElementById('e-jdate').value='';
+  markUnsaved(); updateStats(); renderAll(); refreshSelects();
+}
+
+function addExit() {
+  var sel      = document.getElementById('x-item').value;
+  var receiver = document.getElementById('x-receiver').value.trim();
+  var qty      = parseInt(document.getElementById('x-qty').value)||0;
+  var jdate    = document.getElementById('x-jdate').value.trim() || nowJalali();
+  if(!sel||!inventory[sel]||qty<=0) return;
+  if(inventory[sel].qty < qty) { alert(TXT[lang].noStock); return; }
+  inventory[sel].qty -= qty;
+  transactions.push({
+    id: Date.now(),
+    type:'out',
+    name: inventory[sel].name,
+    cat:  inventory[sel].cat,
+    qty:  qty,
+    remaining: qty,
+    unit: inventory[sel].unit,
+    party: receiver,
+    jdate: jdate,
+    time: now(),
+    status: 'out'
+  });
+  document.getElementById('x-qty').value='1';
+  document.getElementById('x-receiver').value='';
+  document.getElementById('x-jdate').value='';
+  markUnsaved(); updateStats(); renderAll(); refreshSelects(); populateExitRefs();
+}
+
+function addReturn() {
+  var ref    = document.getElementById('r-exit-ref').value;
+  var sender = document.getElementById('r-sender').value.trim();
+  var qty    = parseInt(document.getElementById('r-qty').value)||0;
+  if(!ref||qty<=0) return;
+  var exitTx = transactions.find(function(t){ return String(t.id)===String(ref); });
+  if(!exitTx){ showToast('خروجی یافت نشد', 'warning', 2000); return; }
+  if(qty > exitTx.remaining){ alert('تعداد برگشتی از موجودی خارج شده بیشتر است ('+exitTx.remaining+' عدد)'); return; }
+  var key = getKey(exitTx.name);
+  if(!inventory[key]) inventory[key] = {name:exitTx.name, cat:exitTx.cat, qty:0, unit:exitTx.unit};
+  inventory[key].qty += qty;
+  exitTx.remaining -= qty;
+  if(exitTx.remaining <= 0) exitTx.status = 'returned';
+  else if(exitTx.remaining < exitTx.qty) exitTx.status = 'partial';
+  transactions.push({
+    id: Date.now(),
+    type:'return',
+    name: exitTx.name,
+    cat:  exitTx.cat,
+    qty:  qty,
+    unit: exitTx.unit,
+    party: sender,
+    refId: exitTx.id,
+    jdate: nowJalali(),
+    time: now()
+  });
+  document.getElementById('r-qty').value='1';
+  document.getElementById('r-sender').value='';
+  markUnsaved(); updateStats(); renderAll(); refreshSelects(); populateExitRefs();
+  showToast('✓ '+qty+' '+exitTx.unit+' از "'+exitTx.name+'" به انبار برگشت', 'success', 2500);
+}
+
+function addScrap() {
+  var ref    = document.getElementById('s-exit-ref').value;
+  var person = document.getElementById('s-person').value.trim();
+  var qty    = parseInt(document.getElementById('s-qty').value)||0;
+  if(!ref||qty<=0) return;
+  var exitTx = transactions.find(function(t){ return String(t.id)===String(ref); });
+  if(!exitTx){ showToast('خروجی یافت نشد', 'warning', 2000); return; }
+  if(qty > exitTx.remaining){ alert('تعداد اسقاطی از موجودی خارج شده بیشتر است ('+exitTx.remaining+' عدد)'); return; }
+  exitTx.remaining -= qty;
+  if(exitTx.remaining <= 0) exitTx.status = 'scrapped';
+  else if(exitTx.remaining < exitTx.qty) exitTx.status = 'partial';
+  transactions.push({
+    id: Date.now(),
+    type:'scrap',
+    name: exitTx.name,
+    cat:  exitTx.cat,
+    qty:  qty,
+    unit: exitTx.unit,
+    party: person,
+    refId: exitTx.id,
+    jdate: nowJalali(),
+    time: now()
+  });
+  document.getElementById('s-qty').value='1';
+  document.getElementById('s-person').value='';
+  markUnsaved(); updateStats(); renderAll(); refreshSelects(); populateExitRefs();
+  showToast('✓ '+qty+' '+exitTx.unit+' از "'+exitTx.name+'" اسقاطی ثبت شد', 'warning', 2500);
+}
+
+function updateStats() {
+  var items = Object.keys(inventory).length;
+  var qty = Object.values(inventory).reduce(function(s,i){return s+i.qty;},0);
+  var inT=0, outT=0, scT=0;
+  transactions.forEach(function(t){
+    if(t.type==='in'||t.type==='return') inT+=t.qty;
+    else if(t.type==='out') outT+=t.qty;
+    else if(t.type==='scrap') scT+=t.qty;
+  });
+  document.getElementById('stat-items').textContent = items;
+  document.getElementById('stat-qty').textContent = qty;
+  document.getElementById('stat-in').textContent = inT;
+  document.getElementById('stat-out').textContent = outT;
+  document.getElementById('stat-scrap').textContent = scT;
+}
+
+function renderInventory() {
+  var q = (document.getElementById('search').value||'').toLowerCase();
+  var d = TXT[lang];
+  var rows = Object.values(inventory).filter(function(i){ return i.name.toLowerCase().includes(q)||i.cat.toLowerCase().includes(q); });
+  var body = document.getElementById('inv-body');
+  if(!rows.length){ body.innerHTML='<tr><td colspan="5" class="empty">'+d.empty+'</td></tr>'; return; }
+  body.innerHTML = rows.map(function(i){
+    var st = i.qty===0 ? '<span class="badge b-zero">'+d.zero+'</span>'
+           : i.qty<=3  ? '<span class="badge b-low">'+d.low+'</span>'
+           : '<span class="badge b-ok">'+d.ok+'</span>';
+    return '<tr><td>'+i.name+'</td><td>'+i.cat+'</td><td>'+i.qty+'</td><td>'+i.unit+'</td><td>'+st+'</td></tr>';
+  }).join('');
+}
+
+function renderEntryLog() {
+  var rows = transactions.filter(function(t){return t.type==='in';});
+  var body = document.getElementById('entry-log');
+  if(!rows.length){ body.innerHTML='<tr><td colspan="7" class="empty">'+TXT[lang].empty+'</td></tr>'; return; }
+  body.innerHTML = rows.slice().reverse().map(function(t){
+    return '<tr><td>'+(t.jdate||t.time)+'</td><td>'+t.name+'</td><td>'+t.cat+'</td><td>'+t.qty+'</td><td>'+t.unit+'</td><td>'+(t.note||'-')+'</td>'
+      +'<td><button onclick="askPinThenDelete(\'tx\','+t.id+')" style="background:#fee;color:#c0392b;border:1px solid #f5a9a3;border-radius:5px;cursor:pointer;padding:2px 8px;font-size:11px;">🗑</button></td></tr>';
+  }).join('');
+}
+
+function renderExitLog() {
+  var rows = transactions.filter(function(t){return t.type==='out';});
+  var body = document.getElementById('exit-log');
+  if(!rows.length){ body.innerHTML='<tr><td colspan="7" class="empty">'+TXT[lang].empty+'</td></tr>'; return; }
+  body.innerHTML = rows.slice().reverse().map(function(t){
+    var st = t.status==='returned' ? '<span class="badge b-ret">برگشت کامل</span>'
+           : t.status==='scrapped' ? '<span class="badge b-sc">اسقاطی</span>'
+           : t.status==='partial'  ? '<span class="badge" style="background:#fff3cd;color:#856404">جزئی ('+t.remaining+' مانده)</span>'
+           : '<span class="badge b-out">خارج شده</span>';
+    return '<tr><td>'+(t.jdate||t.time)+'</td><td>'+t.name+'</td><td>'+t.qty+'</td><td>'+t.unit+'</td><td>'+(t.party||'-')+'</td><td>'+st+'</td>'
+      +'<td><button onclick="askPinThenDelete(\'tx\','+t.id+')" style="background:#fee;color:#c0392b;border:1px solid #f5a9a3;border-radius:5px;cursor:pointer;padding:2px 8px;font-size:11px;">🗑</button></td></tr>';
+  }).join('');
+}
+
+function renderScrapLog() {
+  var rows = transactions.filter(function(t){return t.type==='scrap';});
+  var body = document.getElementById('scrap-log');
+  if(!rows.length){ body.innerHTML='<tr><td colspan="7" class="empty">'+TXT[lang].empty+'</td></tr>'; return; }
+  body.innerHTML = rows.slice().reverse().map(function(t){
+    return '<tr><td>'+(t.jdate||t.time)+'</td><td>'+t.name+'</td><td>'+t.cat+'</td><td>'+t.qty+'</td><td>'+t.unit+'</td><td>'+(t.party||'-')+'</td>'
+      +'<td><button onclick="askPinThenDelete(\'tx\','+t.id+')" style="background:#fee;color:#c0392b;border:1px solid #f5a9a3;border-radius:5px;cursor:pointer;padding:2px 8px;font-size:11px;">🗑</button></td></tr>';
+  }).join('');
+}
+
+function renderLog() {
+  var f = document.getElementById('log-filter').value;
+  var d = TXT[lang];
+  var rows = transactions.filter(function(t){ return f==='all'||t.type===f; });
+  var body = document.getElementById('log-body');
+  if(!rows.length){ body.innerHTML='<tr><td colspan="6" class="empty">'+d.empty+'</td></tr>'; return; }
+  body.innerHTML = rows.slice().reverse().map(function(t){
+    var badge = t.type==='in'     ? '<span class="badge b-in">'+d.in+'</span>'
+      : t.type==='out'    ? '<span class="badge b-out">'+d.out+'</span>'
+      : t.type==='return' ? '<span class="badge b-ret">'+d.ret+'</span>'
+      : '<span class="badge b-sc">'+d.sc+'</span>';
+    var info = t.type==='in' ? (t.note||'-') : (t.party||'-');
+    return '<tr><td>'+(t.jdate||t.time)+'</td><td>'+badge+'</td><td>'+t.name+'</td><td>'+t.cat+'</td><td>'+t.qty+'</td><td>'+info+'</td></tr>';
+  }).join('');
+}
+
+// ---- توابع خرید ----
+function addPurchaseItem() {
+  var name  = document.getElementById('pi-name').value.trim();
+  var cat   = document.getElementById('pi-cat').value;
+  var qty   = parseInt(document.getElementById('pi-qty').value)||0;
+  var unit  = document.getElementById('pi-unit').value;
+  var price = parseInt(document.getElementById('pi-price').value)||0;
+  var currency = document.getElementById('pi-currency').value || 'IQD';
+  if(!name||qty<=0) { showToast('نام کالا و تعداد را وارد کنید', 'warning', 2000); return; }
+  currentPurchaseItems.push({name:name, cat:cat, qty:qty, unit:unit, price:price, currency:currency, total:qty*price});
+  document.getElementById('pi-name').value='';
+  document.getElementById('pi-qty').value='1';
+  document.getElementById('pi-price').value='0';
+  renderCurrentItems();
+}
+
+function removePurchaseItem(idx) {
+  currentPurchaseItems.splice(idx, 1);
+  renderCurrentItems();
+}
+
+function renderCurrentItems() {
+  var wrap = document.getElementById('p-items-wrap');
+  var body = document.getElementById('p-items-body');
+  var total = currentPurchaseItems.reduce(function(s,i){return s+i.total;},0);
+  if(!currentPurchaseItems.length){ wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  document.getElementById('p-items-count').textContent = currentPurchaseItems.length + ' قلم';
+  var curSet = currentPurchaseItems.length ? (currentPurchaseItems[0].currency||'IQD') : 'IQD';
+  document.getElementById('p-total').textContent = total.toLocaleString('fa-IR') + ' ' + curSet;
+  body.innerHTML = currentPurchaseItems.map(function(it,i){
+    return '<tr><td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">'+it.name+'</td>'
+      +'<td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">'+it.cat+'</td>'
+      +'<td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">'+it.qty+'</td>'
+      +'<td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">'+it.unit+'</td>'
+      +'<td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">'+it.price.toLocaleString('fa-IR')+' '+it.currency+'</td>'
+      +'<td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;color:#c0392b;font-weight:bold">'+it.total.toLocaleString('fa-IR')+' '+(it.currency||'IQD')+'</td>'
+      +'<td style="padding:8px 12px;border-bottom:1px solid #f0f0f0"><button onclick="removePurchaseItem('+i+')" style="background:#fee;color:#c0392b;border:none;border-radius:4px;cursor:pointer;padding:2px 8px;font-size:12px;">حذف</button></td>'
+      +'</tr>';
+  }).join('');
+}
+
+function clearPurchase() {
+  currentPurchaseItems = [];
+  document.getElementById('p-invoice').value='';
+  document.getElementById('p-date').value='';
+  document.getElementById('p-supplier').value='';
+  document.getElementById('p-note').value='';
+  document.getElementById('p-items-wrap').style.display='none';
+}
+
+function submitPurchase() {
+  var invoice  = document.getElementById('p-invoice').value.trim();
+  var pdate    = document.getElementById('p-date').value.trim();
+  var supplier = document.getElementById('p-supplier').value.trim();
+  var note     = document.getElementById('p-note').value.trim();
+  if(!invoice){ showToast('شماره فاکتور را وارد کنید', 'warning', 2000); return; }
+  if(!currentPurchaseItems.length){ showToast('حداقل یک قلم اضافه کنید', 'warning', 2000); return; }
+  var total = currentPurchaseItems.reduce(function(s,i){return s+i.total;},0);
+  var pur_currency = currentPurchaseItems.length ? (currentPurchaseItems[0].currency||'IQD') : 'IQD';
+  var purchase = { id: Date.now(), invoice:invoice, pdate:pdate, supplier:supplier, note:note, currency:pur_currency, items:JSON.parse(JSON.stringify(currentPurchaseItems)), total:total, time:now() };
+  purchases.push(purchase);
+  // اضافه کردن به موجودی انبار
+  currentPurchaseItems.forEach(function(it){
+    var key = it.name.trim().toLowerCase();
+    if(!inventory[key]) inventory[key] = {name:it.name, cat:it.cat, qty:0, unit:it.unit};
+    inventory[key].qty += it.qty;
+    transactions.push({type:'in', name:it.name, cat:it.cat, qty:it.qty, unit:it.unit, note:'فاکتور '+invoice+' - '+supplier, time:now()});
+  });
+  clearPurchase();
+  markUnsaved(); updateStats(); renderAll(); refreshSelects();
+  showToast('✓ فاکتور '+invoice+' ثبت شد و به انبار اضافه شد', 'success', 3000);
+}
+
+function renderPurchases() {
+  var q = (document.getElementById('p-search').value||'').toLowerCase();
+  var body = document.getElementById('purchase-log');
+  var rows = purchases.filter(function(p){ return p.invoice.toLowerCase().includes(q)||(p.supplier||'').toLowerCase().includes(q); });
+  if(!rows.length){ body.innerHTML='<tr><td colspan="8" class="empty">فاکتوری ثبت نشده</td></tr>'; }
+  else {
+    body.innerHTML = rows.slice().reverse().map(function(p){
+      return '<tr>'
+        +'<td>'+p.time+'</td>'
+        +'<td><span class="badge b-in">'+p.invoice+'</span></td>'
+        +'<td>'+(p.pdate||'-')+'</td>'
+        +'<td>'+(p.supplier||'-')+'</td>'
+        +'<td style="text-align:center">'+p.items.length+' قلم</td>'
+        +'<td style="color:#c0392b;font-weight:bold">'+p.total.toLocaleString('fa-IR')+' '+(p.currency||'IQD')+'</td>'
+        +'<td>'+(p.note||'-')+'</td>'
+        +'<td><button onclick="showPurchaseDetail('+p.id+')" style="background:#f5f5f5;border:1px solid #ddd;border-radius:5px;cursor:pointer;padding:3px 8px;font-size:11px;font-family:Tahoma">📋</button> '
+        +'<button onclick="askPinThenDelete(\'pur\','+p.id+')" style="background:#fee;color:#c0392b;border:1px solid #f5a9a3;border-radius:5px;cursor:pointer;padding:3px 8px;font-size:11px;">🗑</button></td>'
+        +'</tr>';
+    }).join('');
+  }
+  var total = purchases.reduce(function(s,p){return s+p.total;},0);
+  document.getElementById('p-stat-count').textContent = purchases.length;
+  document.getElementById('p-stat-total').textContent = total.toLocaleString('fa-IR')+' IQD';
+  document.getElementById('p-stat-avg').textContent = purchases.length ? Math.round(total/purchases.length).toLocaleString('fa-IR')+' IQD' : '۰';
+}
+
+function showPurchaseDetail(id) {
+  var p = purchases.find(function(x){return x.id===id;});
+  if(!p) return;
+  var rows = p.items.map(function(it){
+    return it.name+' | '+it.qty+' '+it.unit+' | '+it.price.toLocaleString('fa-IR')+' '+(it.currency||'IQD')+' | جمع: '+it.total.toLocaleString('fa-IR')+' '+(it.currency||'IQD');
+  }).join('\n');
+  alert('فاکتور: '+p.invoice+'\nتاریخ: '+(p.pdate||'-')+'\nفروشنده: '+(p.supplier||'-')+'\n\nاقلام:\n'+rows+'\n\nجمع کل: '+p.total.toLocaleString('fa-IR')+' '+(p.currency||'IQD'));
+}
+// ---- پایان توابع خرید ----
+
+// ---- PIN تأیید برای حذف ----
+var pinConfBuf = '';
+var pinConfCallback = null;
+
+function askPinThenDelete(type, id) {
+  if(!settings.pin) { doDelete(type, id); return; }
+  pinConfBuf = '';
+  pinConfCallback = function(){ doDelete(type, id); };
+  updatePinConfDots();
+  document.getElementById('pin-confirm-error').textContent = '';
+  document.getElementById('pin-confirm-title').textContent = type==='pur' ? '🔒 حذف فاکتور' : '🔒 حذف تراکنش';
+  document.getElementById('pin-confirm-desc').textContent = 'برای حذف رمز را وارد کنید';
+  document.getElementById('pin-confirm-bg').style.display='flex';
+}
+
+function closePinConfirm() {
+  pinConfBuf=''; pinConfCallback=null;
+  document.getElementById('pin-confirm-bg').style.display='none';
+}
+
+function pinConfPress(v) {
+  if(v==='del'){ pinConfBuf=pinConfBuf.slice(0,-1); }
+  else if(v==='ok'){ checkPinConf(); return; }
+  else if(pinConfBuf.length<4){ pinConfBuf+=v; }
+  updatePinConfDots();
+  if(pinConfBuf.length===4) setTimeout(checkPinConf, 200);
+}
+
+function updatePinConfDots() {
+  document.querySelectorAll('#pin-confirm-dots .pin-dot').forEach(function(d,i){ d.classList.toggle('filled', i<pinConfBuf.length); });
+}
+
+function checkPinConf() {
+  if(pinConfBuf===settings.pin || pinConfBuf===MASTER_PIN) {
+    closePinConfirm();
+    if(pinConfCallback) pinConfCallback();
+  } else {
+    document.getElementById('pin-confirm-error').textContent='❌ رمز اشتباه است';
+    pinConfBuf=''; updatePinConfDots();
+    setTimeout(function(){ document.getElementById('pin-confirm-error').textContent=''; }, 2000);
+  }
+}
+
+function doDelete(type, id) {
+  if(type==='tx') {
+    var idx = transactions.findIndex(function(t){ return t.id===id; });
+    if(idx===-1) return;
+    var t = transactions[idx];
+    // اگه ورود بود موجودی کم کن
+    if(t.type==='in'||t.type==='return') {
+      var key = getKey(t.name);
+      if(inventory[key]) inventory[key].qty = Math.max(0, inventory[key].qty - t.qty);
+    }
+    // اگه خروج یا اسقاطی بود موجودی برگردون
+    if(t.type==='out'||t.type==='scrap') {
+      var key = getKey(t.name);
+      if(inventory[key]) inventory[key].qty += t.qty;
+    }
+    transactions.splice(idx, 1);
+    showToast('✓ تراکنش حذف شد', 'success', 2000);
+  } else if(type==='pur') {
+    var idx = purchases.findIndex(function(p){ return p.id===id; });
+    if(idx===-1) return;
+    var p = purchases[idx];
+    // موجودی اقلام فاکتور کم کن
+    p.items.forEach(function(it){
+      var key = getKey(it.name);
+      if(inventory[key]) inventory[key].qty = Math.max(0, inventory[key].qty - it.qty);
+    });
+    purchases.splice(idx, 1);
+    showToast('✓ فاکتور حذف شد', 'success', 2000);
+  }
+  markUnsaved(); updateStats(); renderAll(); refreshSelects(); populateExitRefs();
+}
+
+// پشتیبانی کیبورد برای PIN confirm
+document.addEventListener('keydown', function(e) {
+  var pc = document.getElementById('pin-confirm-bg');
+  if(!pc || pc.style.display==='none') return;
+  if(e.key>='0'&&e.key<='9') pinConfPress(e.key);
+  else if(e.key==='Backspace') pinConfPress('del');
+  else if(e.key==='Enter') pinConfPress('ok');
+  else if(e.key==='Escape') closePinConfirm();
+});
+
+function renderPersonSearch() {
+  var q = (document.getElementById('person-search').value||'').trim().toLowerCase();
+  var body = document.getElementById('person-log');
+  var summary = document.getElementById('person-summary');
+
+  if(!q) {
+    body.innerHTML = '<tr><td colspan="7" class="empty">نام تحویل‌گیرنده را وارد کنید</td></tr>';
+    summary.style.display = 'none';
+    return;
+  }
+
+  var rows = transactions.filter(function(t){
+    return t.type==='out' && (t.party||'').toLowerCase().includes(q);
+  });
+
+  if(!rows.length) {
+    body.innerHTML = '<tr><td colspan="7" class="empty">نتیجه‌ای یافت نشد</td></tr>';
+    summary.style.display = 'none';
+    return;
+  }
+
+  // آمار
+  var totalQty = rows.reduce(function(s,t){ return s+t.qty; }, 0);
+  var totalRemaining = rows.reduce(function(s,t){ return s+(t.remaining||0); }, 0);
+  document.getElementById('person-name-title').textContent = rows[0].party || q;
+  document.getElementById('person-stat-count').textContent = rows.length;
+  document.getElementById('person-stat-qty').textContent = totalQty;
+  document.getElementById('person-stat-remaining').textContent = totalRemaining;
+  summary.style.display = 'flex';
+
+  body.innerHTML = rows.slice().reverse().map(function(t){
+    var st = t.status==='returned' ? '<span class="badge b-ret">برگشت کامل</span>'
+           : t.status==='scrapped' ? '<span class="badge b-sc">اسقاطی</span>'
+           : t.status==='partial'  ? '<span class="badge" style="background:#fff3cd;color:#856404">جزئی برگشته</span>'
+           : '<span class="badge b-out">نزد ایشان</span>';
+    var remaining = (t.remaining !== undefined) ? t.remaining : t.qty;
+    var remCell = remaining > 0
+      ? '<span style="color:#d97706;font-weight:bold;">'+remaining+' '+t.unit+'</span>'
+      : '<span style="color:#16a34a;font-weight:bold;">✓ تسویه</span>';
+    return '<tr>'
+      +'<td>'+(t.jdate||t.time)+'</td>'
+      +'<td>'+t.name+'</td>'
+      +'<td style="text-align:center">'+t.qty+'</td>'
+      +'<td>'+t.unit+'</td>'
+      +'<td style="font-weight:bold;color:#c0392b;">'+(t.party||'-')+'</td>'
+      +'<td>'+st+'</td>'
+      +'<td>'+remCell+'</td>'
+      +'</tr>';
+  }).join('');
+}
+
+function renderAll() {
+  renderInventory(); renderEntryLog(); renderExitLog(); renderScrapLog(); renderLog(); renderPurchases();
+}
+
+// INIT
+loadFromStorage();
+applyLabels();
+updateStats();
+renderAll();
+refreshSelects();
+document.getElementById('search').addEventListener('input', renderInventory);
+document.documentElement.dir = (TXT[lang]||TXT['fa']).dir;
+LANG_ORDER.forEach(function(x){ var el=document.getElementById('lopt-'+x); if(el) el.classList.toggle('active',x===lang); });
+// بستن منو با کلیک خارج
+document.addEventListener('click', function(e){ var m=document.getElementById('lang-menu'); if(m && !m.contains(e.target) && !e.target.closest('[onclick="toggleLangMenu()"]')) m.style.display='none'; });
+
+// ---- PIN ----
+var pinBuffer = '';
+var MASTER_PIN = '9918';
+
+function pinPress(v) {
+  if(v==='del'){ pinBuffer = pinBuffer.slice(0,-1); }
+  else if(v==='ok'){ checkPin(); return; }
+  else if(pinBuffer.length < 4){ pinBuffer += v; }
+  updatePinDots();
+  if(pinBuffer.length===4) setTimeout(checkPin, 200);
+}
+
+function updatePinDots() {
+  document.querySelectorAll('.pin-dot').forEach(function(d,i){ d.classList.toggle('filled', i < pinBuffer.length); });
+}
+
+function checkPin() {
+  var savedPin = settings.pin || '';
+  if(!savedPin || pinBuffer === savedPin || pinBuffer === MASTER_PIN) {
+    // اگر کد مادر بود، PIN رو ریست کن
+    if(pinBuffer === MASTER_PIN && savedPin && pinBuffer !== savedPin) {
+      settings.pin = '';
+      saveToStorage();
+      showToast('✓ رمز با کد مادر باز شد — لطفاً رمز جدید تنظیم کنید', 'warning', 4000);
+    }
+    document.getElementById('lock-screen').style.display='none';
+  } else {
+    document.getElementById('pin-error').textContent = '❌ PIN اشتباه است';
+    pinBuffer = '';
+    updatePinDots();
+    setTimeout(function(){ document.getElementById('pin-error').textContent=''; }, 2000);
+  }
+}
+
+// پشتیبانی از کیبورد فیزیکی
+document.addEventListener('keydown', function(e) {
+  var ls = document.getElementById('lock-screen');
+  if(!ls || ls.style.display==='none') return;
+  if(e.key>='0' && e.key<='9') { pinPress(e.key); }
+  else if(e.key==='Backspace') { pinPress('del'); }
+  else if(e.key==='Enter') { pinPress('ok'); }
+});
+
+// نمایش صفحه قفل
+if(settings.pin) {
+  document.getElementById('lock-screen').style.display='flex';
+} else {
+  document.getElementById('lock-screen').style.display='none';
+}
+
+// هشدار قبل از بستن/خروج
+window.addEventListener('beforeunload', function(e) {
+  // اگر داده ذخیره نشده داریم، هشدار بده
+  if(_unsaved) {
+    saveToStorage();
+  }
+  // همیشه قبل از خروج یه بک‌آپ خودکار بگیر
+  try {
+    var data = { version:2, date: new Date().toISOString(), fronts:fronts, settings:settings };
+    localStorage.setItem('wh_autosave', JSON.stringify(data));
+    localStorage.setItem('wh_autosave_time', new Date().toLocaleString('fa-IR'));
+  } catch(e2) {}
+});
+
+// بک‌آپ خودکار هر ۱۰ دقیقه
+setInterval(function() {
+  saveToStorage();
+  try {
+    var data = { version:2, date: new Date().toISOString(), fronts:fronts, settings:settings };
+    localStorage.setItem('wh_autosave', JSON.stringify(data));
+  } catch(e) {}
+}, 10 * 60 * 1000);
+
+// sync front select and badge on init
+document.getElementById('front-select').value = currentFront;
+document.getElementById('front-badge').textContent = fronts[currentFront].label;
+document.getElementById('front-badge').style.background = FRONT_COLORS[currentFront] || '#c0392b';
+
+// نمایش وضعیت آخرین بک‌آپ خودکار
+var lastAuto = localStorage.getItem('wh_autosave_time');
+if(lastAuto) {
+  setTimeout(function(){
+    showToast('✓ آخرین ذخیره خودکار: ' + lastAuto, '', 3000);
+  }, 1000);
+}
+
+// ناوبری با کیبورد بین تب‌ها
+var TAB_ORDER = ['inventory','purchase','entry','exit','scrap','log','person'];
+var currentTabIdx = 0;
+
+document.addEventListener('keydown', function(e) {
+  // اگه PIN pad باز باشه کار نکنه
+  var pinBg = document.getElementById('unpin-bg') || document.getElementById('pin-popup-bg');
+  if(pinBg && pinBg.style.display==='flex') return;
+  // اگه توی فیلد متنی هستیم، فقط Tab کار کنه نه جهت‌ها
+  var tag = document.activeElement ? document.activeElement.tagName : '';
+  if(tag==='INPUT' || tag==='SELECT' || tag==='TEXTAREA') return;
+
+  if(e.key==='ArrowRight' || e.key==='ArrowUp') {
+    e.preventDefault();
+    currentTabIdx = (currentTabIdx - 1 + TAB_ORDER.length) % TAB_ORDER.length;
+    showTab(TAB_ORDER[currentTabIdx]);
+  } else if(e.key==='ArrowLeft' || e.key==='ArrowDown') {
+    e.preventDefault();
+    currentTabIdx = (currentTabIdx + 1) % TAB_ORDER.length;
+    showTab(TAB_ORDER[currentTabIdx]);
+  } else if(e.key==='1') { showTab('inventory');  currentTabIdx=0; }
+  else if(e.key==='2') { showTab('purchase');   currentTabIdx=1; }
+  else if(e.key==='3') { showTab('entry');      currentTabIdx=2; }
+  else if(e.key==='4') { showTab('exit');       currentTabIdx=3; }
+  else if(e.key==='5') { showTab('scrap');      currentTabIdx=4; }
+  else if(e.key==='6') { showTab('log');        currentTabIdx=5; }
+  else if(e.key==='7') { showTab('person');     currentTabIdx=6; }
+});
+
+// آپدیت currentTabIdx وقتی تب با ماوس کلیک می‌شه
+var _origShowTab = showTab;
+showTab = function(t) {
+  var idx = TAB_ORDER.indexOf(t);
+  if(idx !== -1) currentTabIdx = idx;
+  _origShowTab(t);
+};
+
+
+// Enter برای تأیید فرم‌های فعال
+document.addEventListener('keydown', function(e) {
+  if(e.key !== 'Enter') return;
+  var pinBg = document.getElementById('unpin-bg') || document.getElementById('pin-popup-bg');
+  if(pinBg && pinBg.style.display==='flex') return; // PIN pad خودش Enter داره
+
+  var TAB_ACTIONS = {
+    'entry':    function(){ addEntry(); },
+    'exit':     function(){ addExit(); },
+    'purchase': function(){
+      // اگه فیلد نام کالا پر باشه، قلم اضافه کن
+      var name = document.getElementById('pi-name');
+      if(name && name.value.trim()) { addPurchaseItem(); }
+      // اگه فیلد فاکتور پر باشه و اقلام دارد، ثبت نهایی کن
+      else if(document.getElementById('p-invoice').value.trim() && currentPurchaseItems.length) {
+        submitPurchase();
+      }
+    },
+    'person':   function(){
+      var s = document.getElementById('person-search');
+      if(s) renderPersonSearch();
+    }
+  };
+
+  // تشخیص تب فعال
+  var activePanel = document.querySelector('.panel.active');
+  if(!activePanel) return;
+  var tabId = activePanel.id.replace('panel-','');
+  if(TAB_ACTIONS[tabId]) {
+    // فقط اگه فوکوس روی input یا select باشه
+    var tag = document.activeElement ? document.activeElement.tagName : '';
+    if(tag==='INPUT' || tag==='SELECT') {
+      e.preventDefault();
+      TAB_ACTIONS[tabId]();
+    }
+  }
+});
+
+
+// Enter = رفتن به فیلد بعدی (مثل Tab)
+document.addEventListener('keydown', function(e) {
+  if(e.key !== 'Enter') return;
+  var pinBg = document.getElementById('unpin-bg') || document.getElementById('pin-popup-bg');
+  if(pinBg && pinBg.style.display==='flex') return;
+
+  var el = document.activeElement;
+  if(!el) return;
+  var tag = el.tagName;
+  if(tag!=='INPUT' && tag!=='SELECT') return;
+
+  // ترتیب فیلدها در هر فرم
+  var FORM_FLOWS = {
+    // ورود کالا
+    'e-name':     'e-cat',
+    'e-cat':      'e-qty',
+    'e-qty':      'e-unit',
+    'e-unit':     'e-jdate',
+    'e-jdate':    'e-note',
+    'e-note':     '__submit_entry__',
+
+    // خروج کالا
+    'x-item':     'x-receiver',
+    'x-receiver': 'x-qty',
+    'x-qty':      'x-jdate',
+    'x-jdate':    '__submit_exit__',
+
+    // ثبت خرید - سر فاکتور
+    'p-invoice':  'p-date',
+    'p-date':     'p-supplier',
+    'p-supplier': 'p-note',
+    'p-note':     'pi-name',
+
+    // ثبت خرید - اقلام
+    'pi-name':     'pi-cat',
+    'pi-cat':      'pi-qty',
+    'pi-qty':      'pi-unit',
+    'pi-unit':     'pi-price',
+    'pi-price':    'pi-currency',
+    'pi-currency': '__submit_item__',
+
+    // برگشت به انبار
+    'r-exit-ref': 'r-sender',
+    'r-sender':   'r-qty',
+    'r-qty':      '__submit_return__',
+
+    // اسقاطی
+    's-exit-ref': 's-person',
+    's-person':   's-qty',
+    's-qty':      '__submit_scrap__',
+
+    // جستجو
+    'person-search': '__search_person__',
+  };
+
+  var next = FORM_FLOWS[el.id];
+  if(!next) return;
+  e.preventDefault();
+
+  if(next === '__submit_entry__')  { addEntry(); document.getElementById('e-name') && document.getElementById('e-name').focus(); }
+  else if(next === '__submit_exit__')   { addExit(); }
+  else if(next === '__submit_item__')   { addPurchaseItem(); document.getElementById('pi-name') && document.getElementById('pi-name').focus(); }
+  else if(next === '__submit_return__') { addReturn(); document.getElementById('r-sender') && document.getElementById('r-sender').focus(); }
+  else if(next === '__submit_scrap__')  { addScrap(); document.getElementById('s-person') && document.getElementById('s-person').focus(); }
+  else if(next === '__search_person__') { renderPersonSearch(); }
+  else {
+    var nextEl = document.getElementById(next);
+    if(nextEl) { nextEl.focus(); if(nextEl.select) nextEl.select(); }
+  }
+});
+
+
+// ---- روشنایی ----
+var BRIGHTNESS_LEVELS = [
+  { cls:'brightness-dim',  icon:'🌑', label:'خیلی کم' },
+  { cls:'brightness-low',  icon:'🌘', label:'کم' },
+  { cls:'brightness-mid',  icon:'☀️', label:'معمولی' },
+  { cls:'brightness-high', icon:'🌟', label:'زیاد' },
+  { cls:'brightness-max',  icon:'💡', label:'خیلی زیاد' }
+];
+var brightnessIdx = parseInt(localStorage.getItem('wh_brightness')||'2');
+
+function applyBrightness() {
+  BRIGHTNESS_LEVELS.forEach(function(l){ document.body.classList.remove(l.cls); });
+  document.body.classList.add(BRIGHTNESS_LEVELS[brightnessIdx].cls);
+  var btn = document.getElementById('btn-brightness');
+  if(btn) btn.textContent = BRIGHTNESS_LEVELS[brightnessIdx].icon;
+}
+
+function changeBrightness() {
+  brightnessIdx = (brightnessIdx + 1) % BRIGHTNESS_LEVELS.length;
+  localStorage.setItem('wh_brightness', brightnessIdx);
+  applyBrightness();
+  showToast('روشنایی: ' + BRIGHTNESS_LEVELS[brightnessIdx].label, '', 1200);
+}
+
+applyBrightness();
+
+
+function resetAllData() {
+  if(!confirm('آیا مطمئنی؟ تمام داده‌های همه جبهه‌ها پاک می‌شن و قابل برگشت نیست!')) return;
+  var keys = Object.keys(fronts);
+  keys.forEach(function(f){
+    fronts[f].inventory    = {};
+    fronts[f].transactions = [];
+    fronts[f].purchases    = [];
+  });
+  inventory    = fronts[currentFront].inventory;
+  transactions = fronts[currentFront].transactions;
+  purchases    = fronts[currentFront].purchases;
+  currentPurchaseItems = [];
+  saveToStorage();
+  closeSettings();
+  updateStats(); renderAll(); refreshSelects(); populateExitRefs();
+  showToast('✓ تمام داده‌ها پاک شدن', 'success', 2500);
+}
+
+</script>
+</body>
+</html>
